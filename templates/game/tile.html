@@ -1,0 +1,33 @@
+<div id="tile-{{ row }}-{{ col }}"
+     class="tile"
+     data-state="{{ state }}"
+     data-animation="pop">{{ letter }}</div>
+<input type="hidden"
+       id="keypress-handler"
+       hx-swap-oob="true"
+       hx-post="{% url 'key_press' %}"
+       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+       hx-trigger="keydown[keyCode>=65 && keyCode<=90] from:body"
+       hx-swap="outerHTML"
+       hx-sync="this:replace"
+       hx-target="#tile-{{ row }}-{{ new_col }}"
+       hx-vals="js:{key: event.key, row: {{ row }}, col: {{ new_col }}}">
+    <input type="hidden"
+           id="backspace-handler"
+           hx-swap-oob="true"
+           hx-post="{% url 'backspace' %}"
+           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+           hx-trigger="keydown[keyCode==8] from:body"
+           hx-swap="outerHTML"
+           hx-sync="this:replace"
+           hx-target="#tile-{{ row }}-{{ new_col|add:'-1' }}"
+           hx-vals="js:{row: {{ row }}, col: {{ new_col }}}">
+    <input type="hidden"
+           id="submit-handler"
+           hx-swap-oob="true"
+           hx-post="{% url 'submit' %}"
+           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+           hx-trigger="keydown[keyCode==13] from:body"
+           hx-swap="outerHTML"
+           hx-sync="this:abort"
+           hx-vals="js:{row: {{ row }}, col: {{ new_col }}}">

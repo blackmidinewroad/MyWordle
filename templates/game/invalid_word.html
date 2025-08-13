@@ -1,0 +1,36 @@
+{% for letter in guess %}
+       <div id="tile-{{ row }}-{{ forloop.counter0 }}"
+            class="tile"
+            data-state="{% if letter %}tbd{% else %}empty{% endif %}"
+            hx-swap-oob="true"
+            data-animation="shake">{{ letter }}</div>
+{% endfor %}
+<input type="hidden"
+       id="keypress-handler"
+       hx-swap-oob="true"
+       hx-post="{% url 'key_press' %}"
+       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+       hx-trigger="keydown[keyCode>=65 && keyCode<=90] from:body"
+       hx-swap="outerHTML"
+       hx-sync="this:replace"
+       hx-target="#tile-{{ row }}-{{ col }}"
+       hx-vals="js:{key: event.key, row: {{ row }}, col: {{ col }}}">
+       <input type="hidden"
+              id="backspace-handler"
+              hx-swap-oob="true"
+              hx-post="{% url 'backspace' %}"
+              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+              hx-trigger="keydown[keyCode==8] from:body"
+              hx-swap="outerHTML"
+              hx-sync="this:replace"
+              hx-target="#tile-{{ row }}-{{ col|add:'-1' }}"
+              hx-vals="js:{row: {{ row }}, col: {{ col }}}">
+       <input type="hidden"
+              id="submit-handler"
+              hx-swap-oob="true"
+              hx-post="{% url 'submit' %}"
+              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+              hx-trigger="keydown[keyCode==13] from:body"
+              hx-swap="outerHTML"
+              hx-sync="this:abort"
+              hx-vals="js:{row: {{ row }}, col: {{ col }}}">

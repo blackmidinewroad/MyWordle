@@ -1,0 +1,46 @@
+{% for res in result %}
+    <div id="tile-{{ row }}-{{ forloop.counter0 }}"
+         class="tile"
+         data-state="tbd"
+         data-final-state="{{ res.state }}"
+         hx-swap-oob="true">{{ res.letter }}</div>
+{% endfor %}
+{% if not is_win %}
+    <input type="hidden"
+           id="keypress-handler"
+           hx-swap-oob="true"
+           hx-post="{% url 'key_press' %}"
+           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+           hx-trigger="none"
+           hx-swap="outerHTML"
+           hx-sync="this:replace"
+           hx-target="#tile-{{ new_row }}-0"
+           hx-vals="js:{key: event.key, row: {{ new_row }}, col: {{ new_col }}}">
+    <input type="hidden"
+           id="backspace-handler"
+           hx-swap-oob="true"
+           hx-post="{% url 'backspace' %}"
+           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+           hx-trigger="none"
+           hx-swap="outerHTML"
+           hx-sync="this:replace"
+           hx-target="#tile-{{ new_row }}-{{ new_col|add:'-1' }}"
+           hx-vals="js:{row: {{ new_row }}, col: {{ new_col }}}">
+    <input type="hidden"
+           id="submit-handler"
+           hx-swap-oob="true"
+           hx-post="{% url 'submit' %}"
+           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+           hx-trigger="none"
+           hx-swap="outerHTML"
+           hx-sync="this:abort"
+           hx-vals="js:{row: {{ new_row }}, col: {{ new_col }}}">
+{% else %}
+    <input type="hidden" id="keypress-handler" hx-swap-oob="true">
+    <input type="hidden" id="backspace-handler" hx-swap-oob="true">
+    <input type="hidden" id="submit-handler" hx-swap-oob="true">
+{% endif %}
+<div id="game-state"
+     data-game-over="{{ game_over }}"
+     data-win="{{ is_win }}"
+     hx-swap-oob="true"></div>

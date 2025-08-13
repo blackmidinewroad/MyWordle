@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load dict_extras %}
+{% block content %}
+    <div class="board">
+        {% for row in gameboard %}
+            <div class='tile-row'>
+                {% for tile in row %}
+                    <div id="tile-{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}"
+                         class="tile"
+                         data-state="{{ tile.state }}">{{ tile.letter }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="keyboard">
+        <div class="keyboard-row">
+            {% for key in 'QWERTYUIOP' %}
+                {% with key_state=keys_state|get_item:key %}
+                    <button class="key" data-key="{{ key }}" data-state="{{ key_state }}">{{ key }}</button>
+                {% endwith %}
+            {% endfor %}
+        </div>
+        <div class="keyboard-row">
+            <div class="spacer-half"></div>
+            {% for key in 'ASDFGHJKL' %}
+                {% with key_state=keys_state|get_item:key %}
+                    <button class="key" data-key="{{ key }}" data-state="{{ key_state }}">{{ key }}</button>
+                {% endwith %}
+            {% endfor %}
+            <div class="spacer-half"></div>
+        </div>
+        <div class="keyboard-row">
+            <button class="key large-key" id='enter'>Enter</button>
+            {% for key in 'ZXCVBNM' %}
+                {% with key_state=keys_state|get_item:key %}
+                    <button class="key" data-key="{{ key }}" data-state="{{ key_state }}">{{ key }}</button>
+                {% endwith %}
+            {% endfor %}
+            <button class="key large-key">←</button>
+        </div>
+    </div>
+    <input type="hidden"
+           id="keypress-handler"
+           hx-post="{% url 'key_press' %}"
+           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+           hx-trigger="keydown[keyCode>=65 && keyCode<=90] from:body"
+           hx-swap="outerHTML"
+           hx-sync="this:replace"
+           hx-target="#tile-{{ cur_row }}-{{ cur_col }}"
+           hx-vals="js:{key: event.key, row: {{ cur_row }}, col: {{ cur_col }}}">
+        <input type="hidden"
+               id="backspace-handler"
+               hx-post="{% url 'backspace' %}"
+               hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+               hx-trigger="keydown[keyCode==8] from:body"
+               hx-swap="outerHTML"
+               hx-sync="this:replace"
+               hx-target="#tile-{{ cur_row }}-{{ cur_col|add:'-1' }}"
+               hx-vals="js:{row: {{ cur_row }}, col: {{ cur_col }}}">
+        <input type="hidden"
+               id="submit-handler"
+               hx-post="{% url 'submit' %}"
+               hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+               hx-trigger="keydown[keyCode==13] from:body"
+               hx-swap="outerHTML"
+               hx-sync="this:abort"
+               hx-vals="js:{row: {{ cur_row }}, col: {{ cur_col }}}">
+        <div id="game-over-modal"
+             class="hidden"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="end-message">
+            <div id="game-over-content">
+                <div id="end-message"></div>
+                <div id="game-over-buttons">
+                    <button id="restart-btn">Play Again</button>
+                </div>
+            </div>
+        </div>
+        <div id="game-state"></div>
+    {% endblock %}
