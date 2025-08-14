@@ -42,7 +42,6 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
 
 6. **Database Setup**:
    ```
-   python manage.py makemigrations
    python manage.py migrate
    ```
 
