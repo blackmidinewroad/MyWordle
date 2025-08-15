@@ -43,8 +43,9 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
    python manage.py load_words game/static/text/answer_words.txt --answer-words
    ```
 
-6. **Run the Server**:
+## Usage
+1. **Run the Server**:
    ```
    python manage.py runserver
    ```
-   Open http://localhost:8000 in your browser to play.
+2. **Open http://localhost:8000 in your browser to play**
