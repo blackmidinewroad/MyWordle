@@ -21,7 +21,7 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
 3. **Set Up Environment Variables**
 
    Create a `.env` file in the project root with the following:
-   ```
+   ```env
    SECRET_KEY='your-secret-key-here'
    ALLOWED_HOSTS='localhost,127.0.0.1'
    ```
