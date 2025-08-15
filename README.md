@@ -15,10 +15,17 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
    cd MyWordle
    ```
 
-2. **Install Dependencies**:
-   ```shell
-   pipenv install
-   ```
+2. **Install Dependencies**
+   - Using pipenv:
+
+      ```shell
+      pipenv install
+      ```
+   - Using pip:
+   
+      ```shell
+      pip install -r requirements.txt
+      ```
 
 3. **Set Up Environment Variables**
 
