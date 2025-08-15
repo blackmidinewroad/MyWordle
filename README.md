@@ -8,13 +8,13 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
 
 ## Installation
 1. **Clone the Repository**:
-   ```
+   ```shell
    git clone https://github.com/blackmidinewroad/MyWordle.git
    cd MyWordle
    ```
 
 2. **Install Dependencies**:
-   ```
+   ```shell
    pipenv install
    ```
 
@@ -26,26 +26,27 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
    ALLOWED_HOSTS='localhost,127.0.0.1'
    ```
    Generate a secure `SECRET_KEY` using:
-   ```python
+   ```shell
    python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
    ```
 
 4. **Database Setup**:
-   ```
+   ```shell
    python manage.py migrate
    ```
 
 5. **Load Words Into Database**
 
    Run these management commands:
-   ```
+   ```shell
    python manage.py load_words game/static/text/dictionary.txt
    python manage.py load_words game/static/text/answer_words.txt --answer-words
    ```
 
 ## Usage
 1. **Run the Server**:
-   ```
+   ```shell
    python manage.py runserver
    ```
+
 2. **Open http://localhost:8000 in your browser to play**
