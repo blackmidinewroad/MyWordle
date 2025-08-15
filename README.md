@@ -1,10 +1,12 @@
 # MyWordle
 A clone of the popular Wordle game, built with Django for the backend and HTMX for dynamic frontend interactions. In the game, players have six attempts to guess a five-letter word, receiving feedback through colored tiles that indicate correct letters and their placement.
 
+
 ## Technologies Used
 - **Backend**: Django for handling game logic.
 - **Frontend**: HTMX (and a little JavaScript) for dynamic HTML updates.
 - **Database**: SQLite for storing words.
+
 
 ## Installation
 1. **Clone the Repository**:
@@ -42,6 +44,7 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
    python manage.py load_words game/static/text/dictionary.txt
    python manage.py load_words game/static/text/answer_words.txt --answer-words
    ```
+
 
 ## Usage
 1. **Run the Server**:
