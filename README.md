@@ -11,8 +11,8 @@ A clone of the popular Wordle game, built with Django for the backend and HTMX f
 ## Installation
 1. **Clone the Repository**:
    ```shell
-   git clone https://github.com/blackmidinewroad/MyWordle.git
-   cd MyWordle
+   git clone https://github.com/blackmidinewroad/my-wordle.git
+   cd my-wordle
    ```
 
 2. **Install Dependencies**
